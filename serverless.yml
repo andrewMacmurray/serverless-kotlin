@@ -1,0 +1,22 @@
+service: bread
+
+provider:
+  name: aws
+  runtime: java8
+  memorySize: 1512
+
+resources:
+  Description: Example API written with SpringBoot with the aws-serverless-java-container library
+
+package:
+  individually: true
+
+functions:
+  SpringBootHandler:
+    handler: com.example.sls.StreamLambdaHandler::handleRequest
+    package:
+      artifact: build/libs/sls-0.0.1-SNAPSHOT-all.jar
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
